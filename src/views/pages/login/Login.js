@@ -16,6 +16,8 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import AuthService from '../../../services/AuthService'
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select/Select";
 
 export default class Login extends Component {
   constructor(props) {
@@ -31,11 +33,14 @@ export default class Login extends Component {
   }
 
   doLogin = () => {
-    if (this.state.loginPerson == 'Employee') {
+    if (this.state.loginPerson === 'Employee') {
       this.loginService
         .employeeLogin(this.state.phoneNumber, this.state.pin)
         .then((response) => {
           console.log(response)
+          response.role = 'Employee'
+          localStorage.setItem('user', JSON.stringify(response))
+          window.location.href = '#/dashboard'
         })
         .catch((error) => {
           console.error(error)
@@ -48,6 +53,9 @@ export default class Login extends Component {
         .employerLogin(this.state.phoneNumber, this.state.pin)
         .then((response) => {
           console.log(response)
+          response.role = 'Employer'
+          localStorage.setItem('user', JSON.stringify(response))
+          window.location.href = '#/dashboard'
         })
         .catch((error) => {
           console.error(error)
@@ -56,6 +64,14 @@ export default class Login extends Component {
           })
         })
     }
+  }
+
+  onChangeFormValue = (field, value) => {
+    let state = this.state
+    state[field] = value
+    this.setState({
+      state
+    })
   }
 
   render() {
@@ -74,14 +90,29 @@ export default class Login extends Component {
                         <CInputGroupText>
                           <CIcon icon={cilUser} />
                         </CInputGroupText>
-                        <CFormInput placeholder="Số điện thoại" autoComplete="phoneNumber" />
+                        <CFormInput value={this.state.phoneNumber}
+                                    onChange={(e) => this.onChangeFormValue('phoneNumber', e.target.value)}
+                                    placeholder="Số điện thoại"
+                                    autoComplete="phoneNumber" />
                       </CInputGroup>
                       <CInputGroup className="mb-4">
                         <CInputGroupText>
                           <CIcon icon={cilLockLocked} />
                         </CInputGroupText>
-                        <CFormInput placeholder="Pin" />
+                        <CFormInput value={this.state.pin} placeholder="Pin" onChange={(e) => this.onChangeFormValue('pin', e.target.value)} />
                       </CInputGroup>
+
+                      <div className="mb-4">
+                        <Select
+                            labelId="exp-label"
+                            id="exp-select"
+                            value={this.state.loginPerson}
+                            onChange={(e) => this.setState({ loginPerson: e.target.value})}
+                        >
+                          <MenuItem value="Employee">Nhân viên</MenuItem>
+                          <MenuItem value="Employer">Nhà tuyển dụng</MenuItem>
+                        </Select>
+                      </div>
                       <CRow>
                         <CCol xs={6}>
                           <CButton color="primary" className="px-4" onClick={this.doLogin}>

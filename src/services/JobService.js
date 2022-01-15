@@ -7,9 +7,10 @@ export default class JobService {
     this.baseRequestService = new BaseRequestService()
   }
 
-  createJob = (data) => {
+  createJob = (id, data) => {
+    console.log(id)
     return this.baseRequestService
-      .post(`${ApiUrls.JOB_URL}?User-Id=` + 1, data)
+      .post(`${ApiUrls.JOB_URL}?User-Id=${id}`, data)
       .then((response) => response.data)
   }
 

@@ -34,7 +34,7 @@ export default class AuthService {
 
   employerRegister = (postData) => {
     return this.baseRequestService
-      .post(`${ApiUrls.EMPLOYEER_REGISTER}`, postData)
+      .post(`${ApiUrls.EMPLOYER_REGISTER}`, postData)
       .then((response) => response.data)
   }
 }

@@ -15,28 +15,46 @@ import {
   CCol,
   CFormLabel,
   CFormTextarea,
-  CModalBody,
-  CModalFooter,
 } from '@coreui/react'
 import JobService from '../../../services/JobService'
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select/Select";
+import MasterDataService from "../../../services/MasterDataService";
 
 export default class JobPost extends Component {
   constructor(props) {
     super(props)
     this.state = {
       job: {},
+      exp_levels: [],
+      cats: [],
       errorMessage: null,
       showAddJobDialog: false,
     }
 
     this.jobService = new JobService()
+    this.masterDataService = new MasterDataService();
+  }
+
+  componentDidMount() {
+    this.masterDataService.experienceLevels().then(res => {
+      this.setState({exp_levels: res})
+    })
+    this.masterDataService.jobCategories().then(res => {
+      this.setState({cats: res})
+    })
   }
 
   doSubmit = () => {
+    console.log(this.state.job)
+    let user = JSON.parse(localStorage.getItem('user'))
+    console.log(user.id)
+    console.log(user)
     this.jobService
-      .createJob(this.state.job)
+      .createJob(user.id, this.state.job)
       .then((response) => {
         console.log(response)
+        this.onHideDialog()
       })
       .catch((error) => {
         console.error(error)
@@ -61,6 +79,7 @@ export default class JobPost extends Component {
   onChangeFormValue = (field, value) => {
     let job = this.state.job
     job[field] = value
+    console.log(job)
     this.setState({
       job: job,
     })
@@ -82,7 +101,7 @@ export default class JobPost extends Component {
               )}
             </div>
             <div className="mb-3">
-              <CFormLabel htmlFor="title">Tên job</CFormLabel>
+              <CFormLabel htmlFor="title">Tiêu đề</CFormLabel>
               <CFormInput
                 type="text"
                 id="title"
@@ -97,7 +116,50 @@ export default class JobPost extends Component {
                 rows="3"
                 value={this.state.job.description}
                 onChange={(e) => this.onChangeFormValue('description', e.target.value)}
-              ></CFormTextarea>
+              />
+            </div>
+            <div className="mb-3">
+              <CFormLabel htmlFor="loc">Vị trí</CFormLabel>
+              <CFormInput
+                  type="text"
+                  id="loc"
+                  value={this.state.job.location}
+                  onChange={(e) => this.onChangeFormValue('location', e.target.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <CFormLabel htmlFor="exp">Kinh nghiệm</CFormLabel><br/>
+              <Select
+                  labelId="exp"
+                  id="exp"
+                  value={this.state.exp}
+                  onChange={(e) => this.onChangeFormValue('experienceLevel', { id: e.target.value })}
+              >
+                {this.state.exp_levels.map(option => {
+                  return (
+                      <MenuItem key={option.id} value={option.id}>
+                        {option.name}
+                      </MenuItem>
+                  )
+                })}
+              </Select>
+            </div>
+            <div className="mb-3">
+              <CFormLabel htmlFor="abc">Ngành nghề</CFormLabel><br/>
+              <Select
+                  labelId="abc"
+                  id="abc"
+                  value={this.state.cat}
+                  onChange={(e) => this.onChangeFormValue('jobCategory', { id: e.target.value })}
+              >
+                {this.state.cats.map(option => {
+                  return (
+                      <MenuItem key={option.id} value={option.id}>
+                        {option.name}
+                      </MenuItem>
+                  )
+                })}
+              </Select>
             </div>
           </CForm>
         </Modal.Body>
