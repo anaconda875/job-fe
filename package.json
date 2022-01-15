@@ -59,8 +59,8 @@
     "sass": "^1.43.5"
   },
   "engines": {
-    "node": ">=10",
-    "npm": ">=6"
+    "node": "16.13.2",
+    "npm": "8.1.2"
   },
   "browserslist": {
     "production": [
