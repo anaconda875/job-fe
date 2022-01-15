@@ -58,7 +58,7 @@ export default class Register extends Component {
       this.authService.employeeRegister(postData)
           .then((response) => {
             console.log(response)
-            window.href = '#/login'
+            window.location.href = "#/login";
             this.setState({
               // openAlertDialog: true
             })
@@ -73,6 +73,7 @@ export default class Register extends Component {
       this.authService.employerRegister(postData)
           .then((response) => {
             console.log(response)
+            window.location.href = "#/login";
             this.setState({
               openAlertDialog: true
             })
