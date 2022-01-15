@@ -1,6 +1,7 @@
 import React from 'react'
 
 const JobPost = React.lazy(() => import('./views/pages/job-post/JobPost'))
+const JobList = React.lazy(() => import('./views/pages/job-post/JobList'))
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
@@ -97,6 +98,7 @@ const routes = [
   { path: '/notifications/toasts', name: 'Toasts', component: Toasts },
   { path: '/widgets', name: 'Widgets', component: Widgets },
   { path: '/job-post', name: 'Widgets', component: JobPost },
+  { path: '/employee-jobs', name: 'Danh sách jobs', component: JobList },
 ]
 
 export default routes

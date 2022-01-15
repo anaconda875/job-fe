@@ -51,8 +51,8 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'Error 404',
-        to: '/404',
+        name: 'Danh sách job',
+        to: '/employee-jobs',
       },
       /*{
         component: CNavItem,
