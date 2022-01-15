@@ -58,8 +58,9 @@ export default class Register extends Component {
       this.authService.employeeRegister(postData)
           .then((response) => {
             console.log(response)
+            window.href = '#/login'
             this.setState({
-              openAlertDialog: true
+              // openAlertDialog: true
             })
           })
           .catch((error) => {
@@ -186,7 +187,7 @@ export default class Register extends Component {
               Đăng ký
             </Button>
             <p className="forgot-password text-right">
-              Already registered <a href="#">sign in?</a>
+              Already registered <a href="#/login">sign in?</a>
             </p>
           </form>
         </>
