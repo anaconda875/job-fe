@@ -51,6 +51,7 @@ export default class Login extends Component {
         .employerLogin(this.state.phoneNumber, this.state.pin)
         .then((response) => {
           console.log(response)
+          window.location.href = '#/dashboard'
         })
         .catch((error) => {
           console.error(error)
