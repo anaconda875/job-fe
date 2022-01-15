@@ -58,6 +58,14 @@ export default class Login extends Component {
     }
   }
 
+  onChangeFormValue = (field, value) => {
+    let state = this.state
+    state[field] = value
+    this.setState({
+      state
+    })
+  }
+
   render() {
     return (
       <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
@@ -74,13 +82,16 @@ export default class Login extends Component {
                         <CInputGroupText>
                           <CIcon icon={cilUser} />
                         </CInputGroupText>
-                        <CFormInput placeholder="Số điện thoại" autoComplete="phoneNumber" />
+                        <CFormInput value={this.state.phoneNumber}
+                                    onChange={(e) => this.onChangeFormValue('phoneNumber', e.target.value)}
+                                    placeholder="Số điện thoại"
+                                    autoComplete="phoneNumber" />
                       </CInputGroup>
                       <CInputGroup className="mb-4">
                         <CInputGroupText>
                           <CIcon icon={cilLockLocked} />
                         </CInputGroupText>
-                        <CFormInput placeholder="Pin" />
+                        <CFormInput value={this.state.pin} placeholder="Pin" onChange={(e) => this.onChangeFormValue('pin', e.target.value)} />
                       </CInputGroup>
                       <CRow>
                         <CCol xs={6}>
