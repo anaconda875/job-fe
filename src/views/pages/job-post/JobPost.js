@@ -47,10 +47,14 @@ export default class JobPost extends Component {
 
   doSubmit = () => {
     console.log(this.state.job)
+    let user = JSON.parse(localStorage.getItem('user'))
+    console.log(user.id)
+    console.log(user)
     this.jobService
-      .createJob(this.state.job)
+      .createJob(user.id, this.state.job)
       .then((response) => {
         console.log(response)
+        this.onHideDialog()
       })
       .catch((error) => {
         console.error(error)
