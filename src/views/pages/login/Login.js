@@ -38,6 +38,8 @@ export default class Login extends Component {
         .employeeLogin(this.state.phoneNumber, this.state.pin)
         .then((response) => {
           console.log(response)
+          response.role = 'Employee'
+          localStorage.setItem('user', JSON.stringify(response))
           window.location.href = '#/dashboard'
         })
         .catch((error) => {
@@ -51,6 +53,8 @@ export default class Login extends Component {
         .employerLogin(this.state.phoneNumber, this.state.pin)
         .then((response) => {
           console.log(response)
+          response.role = 'Employer'
+          localStorage.setItem('user', JSON.stringify(response))
           window.location.href = '#/dashboard'
         })
         .catch((error) => {
