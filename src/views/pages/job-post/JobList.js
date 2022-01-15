@@ -139,6 +139,11 @@ export default class JobList extends Component {
       </Modal>
     )
   }
+
+  handle = (e, item) => {
+    console.log(item)
+  }
+
   render() {
     return (
       <>
@@ -163,6 +168,7 @@ export default class JobList extends Component {
                     <CTableHeaderCell scope="col">Job</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Ngành nghề</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Level</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Action</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
@@ -176,6 +182,11 @@ export default class JobList extends Component {
                         </CTableDataCell>
                         <CTableDataCell>
                           {item.experienceLevel ? item.experienceLevel.name : ''}
+                        </CTableDataCell>
+                        <CTableDataCell>
+                          <CButton color="info" onClick={e => this.handle(e, item)}>
+                            Thêm job
+                          </CButton>
                         </CTableDataCell>
                       </CTableRow>
                     )
